@@ -40,4 +40,4 @@ def distance(str1: Collection[T], str2: Collection[T], *,
                 dp_table[row_idx][col_idx] + replace_cost * int(is_replaced)
             )
 
-    return dp_table[len_str2 + 1][len_str1 + 1]
+    return dp_table[len_str2][len_str1]
