@@ -8,6 +8,9 @@ def align(seq1: Sequence[T], seq2: Sequence[T], *,
           insert_cost: int = 1, delete_cost: int = 1, replace_cost: int = 1) \
         -> List[Tuple[Optional[T], Optional[T]]]:
     """
+    Align two sequences using Levenshtein distance.
+    The two sequences would be aligned using dynamic programming.
+    Therefore, it will align in a way that minimizes the Levenshtein Distance from the start.
 
     Parameters
     ----------
