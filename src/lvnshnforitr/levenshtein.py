@@ -106,7 +106,8 @@ def distance(str1: Collection[T], str2: Collection[T], *,
     len_str2: int = len(str2)
     # Initialize table. Only dp_table[0, col_idx] and dp_table[row_idx, 0] matters
     dp_table: List[List[int]] = [
-        [col_idx * delete_cost + row_idx * insert_cost for col_idx in range(len_str1 + 1)] for row_idx in range(len_str2 + 1)
+        [col_idx * delete_cost + row_idx * insert_cost for col_idx in range(len_str1 + 1)]
+        for row_idx in range(len_str2 + 1)
     ]
 
     for col_idx, item1 in enumerate(str1):
