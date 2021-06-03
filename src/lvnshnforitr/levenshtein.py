@@ -43,13 +43,13 @@ def align(seq1: Sequence[T], seq2: Sequence[T], *,
             cost_if_deleted: int = dp_table[row_idx + 1][col_idx] + delete_cost
             cost_if_replaced: int = dp_table[row_idx][col_idx] + replace_cost * int(is_replaced)
 
-            if cost_if_inserted < cost_if_deleted and cost_if_inserted < cost_if_replaced:
+            if cost_if_inserted <= cost_if_deleted and cost_if_inserted <= cost_if_replaced:
                 dp_table[row_idx + 1][col_idx + 1] = cost_if_inserted
                 dp_index_memo[row_idx + 1][col_idx + 1] = (row_idx, col_idx + 1)
-            elif cost_if_deleted < cost_if_inserted and cost_if_deleted < cost_if_replaced:
+            elif cost_if_deleted <= cost_if_inserted and cost_if_deleted <= cost_if_replaced:
                 dp_table[row_idx + 1][col_idx + 1] = cost_if_deleted
                 dp_index_memo[row_idx + 1][col_idx + 1] = (row_idx + 1, col_idx)
-            elif cost_if_replaced < cost_if_inserted and cost_if_replaced < cost_if_deleted:
+            elif cost_if_replaced <= cost_if_inserted and cost_if_replaced <= cost_if_deleted:
                 dp_table[row_idx + 1][col_idx + 1] = cost_if_replaced
                 dp_index_memo[row_idx + 1][col_idx + 1] = (row_idx, col_idx)
 
