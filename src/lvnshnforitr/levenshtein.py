@@ -60,9 +60,7 @@ def align(str1: Sequence[T], str2: Sequence[T], *,
     col_idx = len_str1
     row_idx = len_str2
     while row_idx > 0 and col_idx > 0:
-        print(f"{row_idx}, {col_idx}")
         previous_idx = dp_index_memo[row_idx][col_idx]
-        print(previous_idx)
         if previous_idx[0] + 1 == row_idx and previous_idx[1] == col_idx:
             align_l_append((None, str2[row_idx - 1]))
         elif previous_idx[0] == row_idx and previous_idx[1] + 1 == col_idx:
