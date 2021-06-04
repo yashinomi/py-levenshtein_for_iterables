@@ -35,15 +35,17 @@ def align(seq1: Sequence[T], seq2: Sequence[T], *,
 
     Parameters
     ----------
-    seq1
-    seq2
+    seq1 : Sequence[T]
+        Before
+    seq2 : Sequence[T]
+        After
     insert_cost
     delete_cost
     replace_cost
 
     Returns
     -------
-    alignments : List[Tuple[T, T]]
+    alignments : List[Tuple[Optional[T], Optional[T]]]
         An aligned items that minimizes the Levenshtein distance.
         When there is multiple ways to align, only one candidate is returned.
     """
