@@ -8,7 +8,13 @@ class TestAlignment(unittest.TestCase):
     def test_str_alignment(self):
         test_cases: List[Tuple[str, str, List[Tuple[Optional[str], Optional[str]]]]] = [
             ("abc", "adc", [("a", "a"), ("b", "d"), ("c", "c")]),
-            ("abcjk", "adck", [("a", "a"), ("b", "d"), ("c", "c"), ("j", None), ("k", "k")])
+            ("abcjk", "adck", [("a", "a"), ("b", "d"), ("c", "c"), ("j", None), ("k", "k")]),
+            ("abakdj", "abaaakdj", [
+                ("a", "a"), ("b", "b"), ("a", "a"), (None, "a"), (None, "a"), ("k", "k"), ("d", "d"), ("j", "j")
+            ]),
+            ("abaaakdj", "abakdj", [
+                ("a", "a"), ("b", "b"), ("a", "a"), ("a", None), ("a", None), ("k", "k"), ("d", "d"), ("j", "j")
+            ]),
         ]
 
         for cor_str, wrg_str, alignment in test_cases:
