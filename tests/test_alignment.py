@@ -26,16 +26,51 @@ class TestAlignment(unittest.TestCase):
 
     def test_str_all_alignments(self):
         test_cases: List[Tuple[str, str, List[List[Tuple[Optional[str], Optional[str]]]]]] = [
-            ("abaaxd", "bax",[
-                [("a", None), ("b", "b"), ("a", "a"), ("a", None), ("x", "x"), ("d", None)],
+            ("abaaxd", "bax", [
                 [("a", None), ("b", "b"), ("a", None), ("a", "a"), ("x", "x"), ("d", None)],
-            ])
+                [("a", None), ("b", "b"), ("a", "a"), ("a", None), ("x", "x"), ("d", None)]
+            ]),
+            ("abakdj", "abaaakdj", [
+                [("a", "a"), ("b", "b"), (None, "a"), (None, "a"), ("a", "a"), ("k", "k"), ("d", "d"), ("j", "j")],
+                [("a", "a"), ("b", "b"), (None, "a"), ("a", "a"), (None, "a"), ("k", "k"), ("d", "d"), ("j", "j")],
+                [("a", "a"), ("b", "b"), ("a", "a"), (None, "a"), (None, "a"), ("k", "k"), ("d", "d"), ("j", "j")]
+            ]),
         ]
 
         for cor_str, wrg_str, alignment in test_cases:
             self.assertEqual(
                 alignment,
-                levenshtein.align(cor_str, wrg_str),
+                levenshtein.align_all(cor_str, wrg_str),
+                f"Error in case of {cor_str=}, {wrg_str=}, {alignment=}"
+            )
+
+    def test_str_all_alignments_with_customized_levenshtein(self):
+        test_cases: List[Tuple[str, str, List[List[Tuple[Optional[str], Optional[str]]]]]] = [
+            ("abaaxd", "bax", [
+                [("a", None), ("b", "b"), ("a", None), ("a", "a"), ("x", "x"), ("d", None)],
+                [("a", None), ("b", "b"), ("a", "a"), ("a", None), ("x", "x"), ("d", None)]
+            ]),
+            ("abakdj", "abaaakdj", [
+                [("a", "a"), ("b", "b"), (None, "a"), (None, "a"), ("a", "a"), ("k", "k"), ("d", "d"), ("j", "j")],
+                [("a", "a"), ("b", "b"), (None, "a"), ("a", "a"), (None, "a"), ("k", "k"), ("d", "d"), ("j", "j")],
+                [("a", "a"), ("b", "b"), ("a", "a"), (None, "a"), (None, "a"), ("k", "k"), ("d", "d"), ("j", "j")]
+            ]),
+        ]
+
+        def is_substr(a: str, b: str) -> bool:
+            return a.startswith(b) or b.startswith(a)
+
+        lvnshtn = levenshtein.CustomizedLevenshtein(
+            is_equal=is_substr,
+            delete_cost=lambda a: 1,
+            insert_cost=lambda b: 1,
+            replace_cost=lambda a, b: 1
+        )
+
+        for cor_str, wrg_str, alignment in test_cases:
+            self.assertEqual(
+                alignment,
+                lvnshtn.align_all(cor_str, wrg_str),
                 f"Error in case of {cor_str=}, {wrg_str=}, {alignment=}"
             )
 
