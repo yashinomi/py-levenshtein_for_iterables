@@ -238,8 +238,8 @@ def distance(str1: Collection[T], str2: Collection[T], *,
 class CustomizedLevenshtein:
     def __init__(self, *,
                  is_equal: Callable[[T, T], bool] = lambda a, b: a == b,
-                 insert_cost: Callable[[T], int] = lambda a, b: 1,
-                 delete_cost: Callable[[T], int] = lambda a, b: 1,
+                 insert_cost: Callable[[T], int] = lambda a: 1,
+                 delete_cost: Callable[[T], int] = lambda a: 1,
                  replace_cost: Callable[[T, T], int] = lambda a, b: 1
                  ):
         self._is_equal = is_equal
